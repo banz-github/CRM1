@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 
 urlpatterns = [
@@ -11,6 +14,8 @@ urlpatterns = [
 
     path('', views.home, name="home"),
     path('user/', views.userPage, name="user-page"),
+    path('account/', views.accountSettings, name="account"),
+
     path('products/', views.products, name="products"),
     path('customer/<str:pk_test>/', views.customer, name="customer"),
 
@@ -20,3 +25,5 @@ urlpatterns = [
 
     
     ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
