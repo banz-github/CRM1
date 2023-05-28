@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 # Create your views here. 
 from .models import *
+from .models import Customer
 from .forms import OrderForm, CreateUserForm
 from .filters import OrderFilter
 from .decorators import unathenticated_user, allowed_users, admin_only
@@ -27,7 +28,7 @@ def registerPage(request):
             group = Group.objects.get(name='customer')
             user.groups.add(group)
             Customer.objects.create(
-                user=user,
+                user=user, name=username
             )
             messages.success(request, 'Account was created for ' + username)
             return redirect('login')
