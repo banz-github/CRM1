@@ -38,6 +38,9 @@ urlpatterns = [
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_done.html"), name="password_reset_complete"),
 #############
     path('add_product/', add_product, name='add_product'),
+    path('delete_product/<int:product_id>/', views.delete_product, name='delete_product')
+
+
     ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

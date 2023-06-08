@@ -188,4 +188,13 @@ def add_product(request):
 
     context = {'form': form}
     return render(request, 'accounts/add_product.html', context)
+#################
+def delete_product(request, product_id):
+    product = Product.objects.get(id=product_id)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('products')
+    context = {'product': product}
+    return render(request, 'accounts/delete_product.html', context)
+
 
