@@ -24,7 +24,7 @@
                             <td>{{ product.category }}</td>
                             <td>{{ product.price }}</td>
                             <td>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="{% url 'delete_product' product_id=product.id %}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}

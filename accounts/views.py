@@ -191,10 +191,7 @@ def add_product(request):
 #################
 def delete_product(request, product_id):
     product = Product.objects.get(id=product_id)
-    if request.method == 'POST':
-        product.delete()
-        return redirect('products')
-    context = {'product': product}
-    return render(request, 'accounts/delete_product.html', context)
+    product.delete()
+    return redirect('products')  # Redirect to the product listing page
 
 
