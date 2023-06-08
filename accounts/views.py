@@ -176,7 +176,8 @@ def deleteOrder(request,pk):
 ######################################
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -189,9 +190,26 @@ def add_product(request):
     context = {'form': form}
     return render(request, 'accounts/add_product.html', context)
 #################
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def delete_product(request, product_id):
     product = Product.objects.get(id=product_id)
     product.delete()
     return redirect('products')  # Redirect to the product listing page
+########################
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def update_product(request, product_id):
+    product = Product.objects.get(id=product_id)
 
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm(instance=product)
+
+    context = {'form': form}
+    return render(request, 'accounts/update_product.html', context)
 
