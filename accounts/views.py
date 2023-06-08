@@ -14,6 +14,8 @@ from .models import Customer
 from .forms import OrderForm, CreateUserForm, CustomerForm
 from .filters import OrderFilter
 from .decorators import unathenticated_user, allowed_users, admin_only
+###############
+from .forms import ProductForm
 
 
 @unathenticated_user
@@ -170,3 +172,20 @@ def deleteOrder(request,pk):
           return redirect('/')
      context = {'item':order}
      return render(request, 'accounts/delete.html', context)
+
+######################################
+
+
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm()
+
+    context = {'form': form}
+    return render(request, 'accounts/add_product.html', context)
+
