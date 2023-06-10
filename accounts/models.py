@@ -36,7 +36,8 @@ class Product(models.Model):
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
-        return self.name
+        return self.name if self.name is not None else ''
+
 
 
 
@@ -52,8 +53,16 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)
     #note = models.CharField(max_length=1000, null=True)
-    def __str__(self):
-        return self.product.name
+    #def __str__(self):
+        #if self.product:
+            #return str(self.product.name)
+        #return f"No Product (Order #{self.id})"
+
+    def __str__(self): 
+        return 'test'
+
+
+
 
 
     

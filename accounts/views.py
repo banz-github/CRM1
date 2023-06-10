@@ -17,6 +17,7 @@ from .decorators import unathenticated_user, allowed_users, admin_only
 ###############
 from .forms import ProductForm
 
+from django.shortcuts import render, get_object_or_404
 
 @unathenticated_user
 def registerPage(request):
@@ -130,6 +131,12 @@ def customer(request, pk_test): # 4
     context = {'customer': customer, 'orders': orders, 'order_count': order_count,'myFilter':myFilter}
     return render(request,'accounts/customer.html',context)
 
+def customer_detail(request, pk):
+    customer = get_object_or_404(Customer, pk=pk)
+    # Additional logic for the customer detail page
+    return render(request, 'accounts/customer_detail.html', {'customer': customer})
+
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
@@ -143,7 +150,8 @@ def createOrder(request, pk):
         formset = OrderFormSet(request.POST, instance=customer)
         if formset.is_valid():
             formset.save()
-            return redirect('/')
+            return redirect('customer-detail', pk=customer.id)
+
 
     context = {'formset':formset}
     return render(request, 'accounts/order_form.html', context)
