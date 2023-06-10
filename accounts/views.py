@@ -136,7 +136,7 @@ def customer_detail(request, pk):
     # Additional logic for the customer detail page
     return render(request, 'accounts/customer_detail.html', {'customer': customer})
 
-
+'''
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
@@ -156,6 +156,69 @@ def createOrder(request, pk):
     context = {'formset':formset}
     return render(request, 'accounts/order_form.html', context)
 
+'''
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def createOrder(request):
+    form = OrderForm()
+    if request.method == 'POST':
+        #print('Printing POST:', request.POST)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form':form}
+    return render(request, 'accounts/order_form.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def createOrderC(request, pk):
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product','status'), extra=5)
+    customer = Customer.objects.get(id=pk)
+    formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
+    #form = OrderForm(initial={'customer':customer})
+    if request.method == 'POST':
+        formset = OrderFormSet(request.POST, instance=customer)
+        #print('Printing POST:', request.POST)
+        #form = OrderForm(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('/')
+
+    context = {'formset':formset}
+    return render(request, 'accounts/order_formC.html', context)
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def updateOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    form = OrderForm(instance=order)
+    if request.method == 'POST':
+        #print('Printing POST:', request.POST)
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form':form}
+    return render(request, 'accounts/order_form.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def deleteOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('/')
+
+    context = {'item':order}
+    return render(request, 'accounts/delete.html', context)
+'''
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def updateOrder(request, pk):
@@ -180,7 +243,7 @@ def deleteOrder(request,pk):
           return redirect('/')
      context = {'item':order}
      return render(request, 'accounts/delete.html', context)
-
+'''
 ######################################
 
 

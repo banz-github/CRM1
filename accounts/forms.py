@@ -14,7 +14,7 @@ class CustomerForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields  = '__all__' #[] if only selected 
+        fields = '__all__'
 
 class CreateUserForm(UserCreationForm):
     class Meta:
