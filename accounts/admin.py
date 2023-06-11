@@ -5,7 +5,11 @@ from .models import *
 from .models import Order
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('product', 'date_created', 'status')
+    list_display = ('order_id', 'product', 'date_created', 'status')  # Specify the fields to display
+
+    def order_id(self, obj):
+        return obj.order_id()  # Display the formatted order ID
+
     list_filter = ('status',)
     search_fields = ('product__name', 'customer__name')  # Search by product name or customer name
     list_per_page = 20  # Number of orders displayed per page

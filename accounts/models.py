@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Customer(models.Model):
+    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
@@ -11,10 +12,9 @@ class Customer(models.Model):
     profile_pic = models.ImageField(default="dflt.jpg", null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
-
     def __str__(self):
         return self.name
-    
+
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)
 
@@ -22,6 +22,7 @@ class Tag(models.Model):
         return self.name
     
 class Product(models.Model):
+    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
     CATEGORY = (
         ('Residential', 'Residential'),
         ('Commercial', 'Commercial'),
@@ -65,19 +66,16 @@ class Order(models.Model):
         ('Out for delivery', 'Out for delivery'),
         ('Delivered', 'Delivered'),
     )
+
+    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
     customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=235, null=True, choices=STATUS)
     note = models.CharField(max_length=1000, null=True)
 
+    def order_id(self):
+        return f"Order_ID#{self.id:03d}"  # Generate the order ID with prefix and zero-padding
+
     def __str__(self):
-         return str(self.product.name)
-
-
-
-
-
-
-
-    
+         return self.order_id()
