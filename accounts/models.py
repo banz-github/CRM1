@@ -67,15 +67,31 @@ class Order(models.Model):
         ('Delivered', 'Delivered'),
     )
 
-    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
+    id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=235, null=True, choices=STATUS)
     note = models.CharField(max_length=1000, null=True)
+    is_archived = models.BooleanField(default=False)  # Add a field to indicate if the order is archived
 
     def order_id(self):
-        return f"Order_ID#{self.id:03d}"  # Generate the order ID with prefix and zero-padding
+        return f"Order_ID#{self.id:03d}"
 
     def __str__(self):
-         return self.order_id()
+        return self.order_id()
+
+class ArchivedOrder(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
+    archived_date = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+    status = models.CharField(max_length=235, null=True)
+    note = models.CharField(max_length=1000, null=True)
+
+    def __str__(self):
+        return str(self.order)
+
+
+
+

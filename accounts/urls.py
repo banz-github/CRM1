@@ -21,12 +21,19 @@ urlpatterns = [
     path('account/', views.accountSettings, name="account"),
 
     path('products/', views.products, name="products"),
+    path('archived_orders/', views.archived_orders, name='archived_orders'),
+
+
+
     path('customer/<str:pk_test>/', views.customer, name="customer"),
 
     path('create_order/', views.createOrder, name="create_order"),
     path('create_orderC/<str:pk>/', views.createOrderC, name="create_orderC"),
     path('update_order/<str:pk>/', views.updateOrder, name="update_order"),
-    path('delete_order/<str:pk>/', views.deleteOrder, name="delete_order"),
+     path('delete_order/<str:pk>/', views.deleteOrder, name='delete_order'),
+    path('archive_order/<str:pk>/', views.archiveOrder, name='archive_order'),
+
+    #path('delete_order/<str:pk>/', views.deleteOrder, name="delete_order"),
 
 
 
