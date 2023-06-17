@@ -1,0 +1,22 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+
+<h2>Archived Orders</h2>
+<table class="table table-sm">
+    <tr>
+        <th>Order ID</th>
+        <th>Product</th>
+        <th>Date Archived</th>
+    </tr>
+    {% for archived_order in archived_orders %}
+        <tr>
+            <td>{{ archived_order.order.order_id }}</td>
+            <td>{{ archived_order.order.product }}</td>
+            <td>{{ archived_order.archived_date }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

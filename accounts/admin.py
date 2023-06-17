@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 from .models import Order
+from .models import ArchivedOrder
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('order_id', 'product', 'date_created', 'status')  # Specify the fields to display
@@ -14,6 +15,10 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('product__name', 'customer__name')  # Search by product name or customer name
     list_per_page = 20  # Number of orders displayed per page
 
+
+@admin.register(ArchivedOrder)
+class ArchivedOrderAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Customer)
 admin.site.register(Product)
