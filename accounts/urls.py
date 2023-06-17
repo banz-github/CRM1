@@ -44,6 +44,13 @@ urlpatterns = [
 
      path('customer/<int:pk>/', views.customer_detail, name='customer-detail'),
 
-    ]
+
+
+
+    path('hidden_orders/', views.hidden_orders, name='hidden_orders'),
+    path('toggle_order_hidden/<int:order_id>/', views.toggle_order_hidden, name='toggle_order_hidden'),
+    path('unhide_order/<int:pk>/', views.unhide_order, name='unhide_order'),
+]
+    
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

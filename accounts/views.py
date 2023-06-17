@@ -63,8 +63,8 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 @admin_only 
-def home(request): # 2
-    orders = Order.objects.all()
+def home(request):
+    orders = Order.objects.filter(is_hidden=False)  # Filter out hidden orders
     customer = Customer.objects.all()
 
     total_customers = customer.count()
@@ -72,9 +72,15 @@ def home(request): # 2
     delivered = orders.filter(status='Delivered').count()
     pending = orders.filter(status='Pending').count()
 
+    context = {
+        'orders': orders,
+        'customer': customer,
+        'total_orders': total_orders,
+        'delivered': delivered,
+        'pending': pending
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
-    context = {'orders': orders, 'customer':customer,'total_orders':total_orders,'delivered':delivered,'pending':pending}
-    return render(request,'accounts/dashboard.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
@@ -175,20 +181,22 @@ def createOrder(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createOrderC(request, pk):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product','status'), extra=5)
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=5)
     customer = Customer.objects.get(id=pk)
     formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
-    #form = OrderForm(initial={'customer':customer})
+
     if request.method == 'POST':
         formset = OrderFormSet(request.POST, instance=customer)
-        #print('Printing POST:', request.POST)
-        #form = OrderForm(request.POST)
         if formset.is_valid():
-            formset.save()
+            orders = formset.save(commit=False)
+            for order in orders:
+                order.is_hidden = False  # Set is_hidden to 0 (False) by default
+                order.save()
             return redirect('/')
 
-    context = {'formset':formset}
+    context = {'formset': formset}
     return render(request, 'accounts/order_formC.html', context)
+
 
 
 
@@ -218,6 +226,32 @@ def deleteOrder(request, pk):
 
     context = {'item':order}
     return render(request, 'accounts/delete.html', context)
+#######################################
+@login_required(login_url='login')
+@admin_only 
+def hidden_orders(request):
+    orders = Order.objects.filter(is_hidden=True)  # Filter hidden orders
+    return render(request, 'accounts/hidden_orders.html', {'orders': orders})
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def toggle_order_hidden(request, order_id):
+    order = Order.objects.get(id=order_id)
+
+    # Toggle the value of is_hidden field
+    order.is_hidden = not order.is_hidden
+    order.save()
+
+    return redirect('home')
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def unhide_order(request, pk):
+    order = Order.objects.get(id=pk)
+    order.is_hidden = False
+    order.save()
+    return redirect('hidden_orders')
+
+
 '''
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])

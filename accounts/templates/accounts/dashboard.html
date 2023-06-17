@@ -41,6 +41,7 @@
                     <th>Products</th>
                     <th>Date Ordered</th>
                     <th>Status</th>
+                    <th>Toggle Hidden</th>
                     <th>Update</th>
                     <th>Remove</th>
                 </tr>
@@ -50,13 +51,17 @@
                         <td>{{order.product}}</td>
                         <td>{{order.date_created}}</td>
                         <td>{{order.status}}</td>
-                        <td><a class="btn btn-sm btn-info"  href="{% url 'update_order' order.id %}">Update</a></td>
-
-                        <td><a class="btn btn-sm btn-danger"  href="{% url 'delete_order' order.id %}">Delete</a></td>
+                        <td>
+                            <a class="btn btn-sm {% if order.is_hidden %}btn-success{% else %}btn-danger{% endif %}" 
+                               href="{% url 'toggle_order_hidden' order.id %}">
+                               {% if order.is_hidden %}Show{% else %}Hide{% endif %}
+                            </a>
+                        </td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+                        <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
                     </tr>
                 {% endfor %}
 
-                
             </table>
 
         </div>
@@ -64,5 +69,3 @@
 </div>
 
 {% endblock %}
-
-

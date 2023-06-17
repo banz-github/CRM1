@@ -66,7 +66,7 @@ class Order(models.Model):
         ('Out for delivery', 'Out for delivery'),
         ('Delivered', 'Delivered'),
     )
-
+    is_hidden = models.BooleanField(default=False)
     id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
     customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
