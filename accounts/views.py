@@ -18,6 +18,8 @@ from .decorators import unathenticated_user, allowed_users, admin_only
 from .forms import ProductForm
 
 from django.shortcuts import render, get_object_or_404
+from .models import Order, ArchivedOrder
+from datetime import datetime
 
 @unathenticated_user
 def registerPage(request):
@@ -177,6 +179,22 @@ def createOrder(request):
     context = {'form':form}
     return render(request, 'accounts/order_form.html', context)
 
+from .models import Order, ArchivedOrder
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def archivedOrders(request):
+    archived_orders = ArchivedOrder.objects.all()
+    context = {'archived_orders': archived_orders}
+    return render(request, 'accounts/archived_orders.html', context)
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def archived_orders(request):
+    archived_orders = ArchivedOrder.objects.all()
+    return render(request, 'accounts/archived_orders.html', {'archived_orders': archived_orders})
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -215,7 +233,8 @@ def updateOrder(request, pk):
     context = {'form':form}
     return render(request, 'accounts/order_form.html', context)
 
-
+####################### THIS WILL LITERALLY DELETE THE ORDER 
+'''
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def deleteOrder(request, pk):
@@ -253,32 +272,51 @@ def unhide_order(request, pk):
 
 
 '''
+
+############# NEW DELETE FUNCTIONALITY (ARCHIVED)
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
-def updateOrder(request, pk):
+def deleteOrder(request, pk):
     order = Order.objects.get(id=pk)
-    form = OrderForm(instance=order)
-
     if request.method == 'POST':
-         form = OrderForm(request.POST, instance=order)
-    if form.is_valid():
-            form.save()
-            return redirect('/')
+        # Create an archived order object and populate its fields
+        archived_order = ArchivedOrder(order=order)
+        archived_order.archived_date = datetime.now()  # Set the archived date/time
+        archived_order.save()
+        
+        # Delete the order
+        order.delete()
+        
+        return redirect('/')
+    
+    context = {'item': order}
+    return render(request, 'accounts/delete.html', context)
 
-    context = {'form':form}
-    return render(request, 'accounts/order_form.html', context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
-def deleteOrder(request,pk):
-     order = Order.objects.get(id=pk)
-     if request.method == "POST":
-          order.delete()
-          return redirect('/')
-     context = {'item':order}
-     return render(request, 'accounts/delete.html', context)
-'''
-######################################
+def archiveOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        # Create an archived order object and populate its fields
+        archived_order = ArchivedOrder(order=order)
+        archived_order.archived_date = datetime.now()  # Set the archived date/time
+        archived_order.save()
+        
+        # Update the is_archived field of the order
+        order.is_archived = True
+        order.save()
+        
+        return redirect('/')
+  
+    
+    context = {'item': order}
+    
+    return render(request, 'accounts/archive.html', context)
+    
+
+
 
 
 @login_required(login_url='login')
