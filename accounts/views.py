@@ -125,17 +125,23 @@ def products(request): # 3
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
-def customer(request, pk_test): # 4
+def customer(request, pk_test):
     customer = Customer.objects.get(id=pk_test)
 
-    orders=customer.order_set.all()
+    orders = customer.order_set.filter(is_hidden=False)
     order_count = orders.count()
 
-    myFilter = OrderFilter(request.GET,queryset=orders)
+    myFilter = OrderFilter(request.GET, queryset=orders)
     orders = myFilter.qs
 
-    context = {'customer': customer, 'orders': orders, 'order_count': order_count,'myFilter':myFilter}
-    return render(request,'accounts/customer.html',context)
+    context = {
+        'customer': customer,
+        'orders': orders,
+        'order_count': order_count,
+        'myFilter': myFilter
+    }
+    return render(request, 'accounts/customer.html', context)
+
 
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
