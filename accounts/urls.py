@@ -51,6 +51,8 @@ urlpatterns = [
     path('toggle_order_hidden/<int:order_id>/', views.toggle_order_hidden, name='toggle_order_hidden'),
     path('unhide_order/<int:pk>/', views.unhide_order, name='unhide_order'),
     path('user/create_orderU/', views.createOrderU, name='create_orderU'),
+
+    path('providephone/', views.providePhone, name="providenum"),
 ]
     
 

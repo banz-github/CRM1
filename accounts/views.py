@@ -117,6 +117,29 @@ def accountSettings(request):
     context = {'form':form}
     return render(request, 'accounts/account_settings.html', context)
 
+from django import forms
+
+class PhoneForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['phone']
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def providePhone(request):
+    customer = request.user.customer
+    form = PhoneForm(instance=customer)
+
+    if request.method == 'POST':
+        form = PhoneForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+
+    context = {'form': form}
+    return render(request, 'accounts/force_phonenum.html', context)
+
+
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def products(request): # 3

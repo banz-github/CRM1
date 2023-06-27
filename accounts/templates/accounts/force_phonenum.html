@@ -1,0 +1,28 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<br>
+<div class="row">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body text-center"> <!-- Added 'text-center' class here -->
+                <h4>Please provide your phone number</h4>
+                <p>Not providing your phone number will restrict you from logging in. Please provide your phone number to enable login.</p>
+
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.phone.label_tag }}
+                    {{ form.phone }}
+                    <br>
+                    <input class="btn btn-primary" type="submit" value="Update Information">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
