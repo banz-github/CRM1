@@ -1,0 +1,25 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+{% include 'accounts/status.html' %}
+<br>
+
+<h5>Update Order</h5>
+<hr>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Update</button>
+</form>
+
+<h5>Update History</h5>
+<hr>
+{% for update in order.orderupdatehistory_set.all %}
+    <p>{{ update.updated_by.username }} updated the order on {{ update.created_at }}:</p>
+    <ul>
+        <li>Product: {{ update.updated_product }}</li>
+        <li>Status: {{ update.updated_status }}</li>
+    </ul>
+{% endfor %}
+
+{% endblock %}

@@ -16,7 +16,7 @@ from .filters import OrderFilter
 from .decorators import unathenticated_user, allowed_users, admin_only
 ###############
 from .forms import ProductForm
-
+from .forms import OrderFormU
 from django.shortcuts import render, get_object_or_404
 
 @unathenticated_user
@@ -324,3 +324,24 @@ def update_product(request, product_id):
     context = {'form': form}
     return render(request, 'accounts/update_product.html', context)
 
+###################
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def createOrderU(request):
+    customer = request.user.customer
+
+    if request.method == 'POST':
+        form = OrderFormU(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.customer = customer
+            order.status = 'Pending'
+            order.is_hidden = 0  # Set is_hidden to 0 (not hidden)
+            order.save()
+            return redirect('user-page')  # Update the redirect statement to 'user-page'
+
+    else:
+        form = OrderFormU()
+
+    context = {'form': form}
+    return render(request, 'accounts/create_orderU.html', context)

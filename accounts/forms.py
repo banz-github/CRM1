@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import *
 from .models import Product
+from django import forms
+from .models import Order
 
 class CustomerForm(ModelForm):
     class Meta:
@@ -25,3 +27,12 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+
+class OrderFormU(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['product']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial['status'] = 'Pending'

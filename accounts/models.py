@@ -65,6 +65,8 @@ class Order(models.Model):
         ('Pending', 'Pending'),
         ('Out for delivery', 'Out for delivery'),
         ('Delivered', 'Delivered'),
+        ('Order Rejected', 'Order Rejected'),
+        ('Processing', 'Processing'),
     )
     is_hidden = models.BooleanField(default=False)
     id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
