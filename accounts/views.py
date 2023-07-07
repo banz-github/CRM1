@@ -19,6 +19,7 @@ from .forms import ProductForm
 from .forms import OrderFormU
 from django.shortcuts import render, get_object_or_404
 
+'''
 @unathenticated_user
 def registerPage(request):
 
@@ -36,6 +37,27 @@ def registerPage(request):
         
     context = {'form':form}
     return render(request, 'accounts/register.html', context)
+'''
+from django.contrib.auth.decorators import login_required
+
+@unathenticated_user
+def registerPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+
+            messages.success(request, 'Account was created for ' + username)
+            return redirect('providephone')  # Redirect to providephone page
+
+    context = {'form': form}
+    return render(request, 'accounts/register.html', context)
+
+
+
 
 
 @unathenticated_user
@@ -138,6 +160,19 @@ def providePhone(request):
     context = {'form': form}
     return render(request, 'accounts/force_phonenum.html', context)
 
+
+@login_required(login_url='provide_phone')
+def providePhonePage(request):
+    if request.method == 'POST':
+        form = PhoneForm(request.POST, instance=request.user.customer)
+        if form.is_valid():
+            form.save()
+            return redirect('user_home')  # Redirect to the main user page
+    else:
+        form = PhoneForm(instance=request.user.customer)
+
+    context = {'form': form}
+    return render(request, 'accounts/provide_phone.html', context)
 
 
 @login_required(login_url='login')

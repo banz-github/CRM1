@@ -4,25 +4,25 @@
 
 
 
-
 <br>
 <div class="row">
     <div class="col-md-9">
         <div class="card">
-            <div class="card-body text-center"> <!-- Added 'text-center' class here -->
+            <div class="card-body text-center">
                 <h4>Please provide your phone number</h4>
                 <p>Not providing your phone number will restrict you from logging in. Please provide your phone number to enable login.</p>
 
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form method="POST" action="">
                     {% csrf_token %}
                     {{ form.phone.label_tag }}
                     {{ form.phone }}
                     <br>
-                    <input class="btn btn-primary" type="submit" value="Update Information">
+                    <input class="btn btn-primary" type="submit" value="Submit">
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
