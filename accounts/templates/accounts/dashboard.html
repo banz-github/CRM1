@@ -37,6 +37,7 @@
             
             <table class="table table-sm">
                 <tr>
+                    <th>Customer Name</th>  <!-- New column for customer name -->
                     <th>Order ID</th>
                     <th>Products</th>
                     <th>Date Ordered</th>
@@ -44,10 +45,10 @@
                     <th>Toggle Hidden</th>
                     <th>Update</th>
                     <th>Remove</th>
-                    <th>Customer Name</th>  <!-- New column for customer name -->
                 </tr>
                 {% for order in orders %}
                     <tr>
+                        <td>{{ order.customer.name }}</td>  <!-- Display customer name -->
                         <td>{{ order.order_id }}</td>
                         <td>{{ order.product }}</td>
                         <td>{{ order.date_created }}</td>
@@ -60,7 +61,6 @@
                         </td>
                         <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
                         <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-                        <td>{{ order.customer.name }}</td>  <!-- Display customer name -->
                     </tr>
                 {% endfor %}
 
