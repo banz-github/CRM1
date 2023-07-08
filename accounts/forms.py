@@ -36,3 +36,9 @@ class OrderFormU(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.initial['status'] = 'Pending'
+
+
+class ColorForm(forms.ModelForm):
+    class Meta:
+        model = Color
+        fields = '__all__'

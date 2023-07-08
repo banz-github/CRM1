@@ -403,3 +403,59 @@ def createOrderU(request):
 
     context = {'form': form}
     return render(request, 'accounts/create_orderU.html', context)
+
+
+
+
+
+################# color views
+from .models import Color
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def colors(request):
+    colors = Color.objects.all()
+    return render(request, 'accounts/colors.html', {'colors': colors})
+
+
+
+from .forms import ColorForm
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def add_color(request):
+    if request.method == 'POST':
+        form = ColorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('colors')
+    else:
+        form = ColorForm()
+
+    context = {'form': form}
+    return render(request, 'accounts/add_color.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def update_color(request, color_id):
+    color = Color.objects.get(id=color_id)
+
+    if request.method == 'POST':
+        form = ColorForm(request.POST, instance=color)
+        if form.is_valid():
+            form.save()
+            return redirect('colors')
+    else:
+        form = ColorForm(instance=color)
+
+    context = {'form': form}
+    return render(request, 'accounts/update_color.html', context)
+
+def delete_color(request, color_id):
+    color = Color.objects.get(id=color_id)
+    if request.method == 'POST':
+        color.delete()
+        return redirect('colors')
+    return render(request, 'accounts/confirm_color_delete.html', {'color': color})

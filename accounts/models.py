@@ -81,3 +81,16 @@ class Order(models.Model):
 
     def __str__(self):
          return self.order_id()
+    
+
+
+
+####### new
+
+class Color(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    code = models.CharField(max_length=20, default="")  # Add the code field
+
+    def __str__(self):
+        return self.name

@@ -54,6 +54,12 @@ urlpatterns = [
     path('providephone/', views.providePhone, name='providephone'),
     path('provide-phone/', views.providePhonePage, name='provide_phone'),
 
+    ###### color 
+    path('add_color/', views.add_color, name='add_color'),
+    path('colors/', views.colors, name='colors'),
+    path('update_color/<int:color_id>/', views.update_color, name='update_color'),
+    path('delete_color/<int:color_id>/', views.delete_color, name='delete_color'),
+
 
 ]
     
