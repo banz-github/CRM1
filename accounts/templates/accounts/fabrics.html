@@ -2,26 +2,34 @@
 
 {% block content %}
    <h2>Fabrics</h2>
-   <table class="table">
-       <thead>
-           <tr>
-               <th>Name</th>
-               <th>Price per Yard</th>
-               <th>Actions</th>
-           </tr>
-       </thead>
-       <tbody>
-           {% for fabric in fabrics %}
+   <div class="card card-body">
+       <table class="table">
+           <thead>
                <tr>
-                   <td>{{ fabric.name }}</td>
-                   <td>{{ fabric.price_per_yard }}</td>
-                   <td>
-                       <a href="{% url 'update_fabric' fabric.id %}" class="btn btn-success">Update</a>
-                       <a href="{% url 'delete_fabric' fabric.id %}" class="btn btn-danger">Delete</a>
-                   </td>
+                   <th>Name</th>
+                   <th>Price per Yard</th>
+                   <th>Actions</th>
                </tr>
-           {% endfor %}
-       </tbody>
-   </table>
-   <a href="{% url 'add_fabric' %}" class="btn btn-primary">Add Fabric</a>
+           </thead>
+           <tbody>
+               {% for fabric in fabrics %}
+                   <tr>
+                       <td>{{ fabric.name }}</td>
+                       <td>{{ fabric.price_per_yard }}</td>
+                       <td>
+                           <a href="{% url 'update_fabric' fabric.id %}" class="btn btn-success">Update</a>
+                           <a href="{% url 'delete_fabric' fabric.id %}" class="btn btn-danger">Delete</a>
+                       </td>
+                   </tr>
+               {% endfor %}
+           </tbody>
+       </table>
+   </div>
+   <div class="card card-body">
+       <div class="row">
+           <div class="col-md-4">
+               <a href="{% url 'add_fabric' %}" class="btn btn-primary">Add Fabric</a>
+           </div>
+       </div>
+   </div>
 {% endblock %}

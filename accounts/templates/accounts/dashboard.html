@@ -3,7 +3,7 @@
 {% block content %}
 {% include 'accounts/status.html' %}
 <br>
-
+<!--
 <div class="row">
     <div class="col-md-5">
         <h5>CUSTOMERS:</h5>
@@ -29,7 +29,7 @@
             </table>
         </div>
     </div>
-
+-->
     <div class="col-md-7">
         <h5>LAST 5 ORDERS</h5>
         <hr>
@@ -44,13 +44,14 @@
                     <th>Toggle Hidden</th>
                     <th>Update</th>
                     <th>Remove</th>
+                    <th>Customer Name</th>  <!-- New column for customer name -->
                 </tr>
                 {% for order in orders %}
                     <tr>
                         <td>{{ order.order_id }}</td>
-                        <td>{{order.product}}</td>
-                        <td>{{order.date_created}}</td>
-                        <td>{{order.status}}</td>
+                        <td>{{ order.product }}</td>
+                        <td>{{ order.date_created }}</td>
+                        <td>{{ order.status }}</td>
                         <td>
                             <a class="btn btn-sm {% if order.is_hidden %}btn-success{% else %}btn-danger{% endif %}" 
                                href="{% url 'toggle_order_hidden' order.id %}">
@@ -59,6 +60,7 @@
                         </td>
                         <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
                         <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+                        <td>{{ order.customer.name }}</td>  <!-- Display customer name -->
                     </tr>
                 {% endfor %}
 

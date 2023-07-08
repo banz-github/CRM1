@@ -103,6 +103,17 @@ def home(request):
     }
     return render(request, 'accounts/dashboard.html', context)
 
+@login_required(login_url='login')
+@admin_only 
+def view_customers(request):
+    customer = Customer.objects.all()
+
+
+    context = {
+        'customer':customer
+    }
+    return render(request, 'accounts/view_customers.html', context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
