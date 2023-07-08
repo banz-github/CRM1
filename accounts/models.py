@@ -94,3 +94,20 @@ class Color(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Fabric(models.Model):
+    id = models.AutoField(primary_key=True)
+    CATEGORY = (
+        ('Residential', 'Residential'),
+        ('Commercial', 'Commercial'),
+        ('Auto', 'Auto'),
+    )
+
+    name = models.CharField(max_length=200, null=True)
+    price_per_yard = models.FloatField(null=True)
+    tags = models.ManyToManyField(Tag)
+    date_added = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.name if self.name is not None else ''

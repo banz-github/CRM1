@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 from .models import Order
-from .models import Color
+from .models import Color, Fabric
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('order_id', 'product', 'date_created', 'status')  # Specify the fields to display
@@ -21,3 +21,4 @@ admin.site.register(Product)
 admin.site.register(Tag)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Color)
+admin.site.register(Fabric)

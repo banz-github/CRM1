@@ -59,7 +59,11 @@ urlpatterns = [
     path('colors/', views.colors, name='colors'),
     path('update_color/<int:color_id>/', views.update_color, name='update_color'),
     path('delete_color/<int:color_id>/', views.delete_color, name='delete_color'),
-
+    ########## frabric
+    path('fabrics/', views.fabrics, name='fabrics'),
+    path('add_fabric/', views.add_fabric, name='add_fabric'),
+    path('update_fabric/<int:fabric_id>/', views.update_fabric, name='update_fabric'),
+    path('delete_fabric/<int:fabric_id>/', views.delete_fabric, name='delete_fabric'),
 
 ]
     

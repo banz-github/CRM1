@@ -459,3 +459,52 @@ def delete_color(request, color_id):
         color.delete()
         return redirect('colors')
     return render(request, 'accounts/confirm_color_delete.html', {'color': color})
+
+
+
+
+############ FABRIC
+from .models import Fabric
+
+def fabrics(request):
+    fabrics = Fabric.objects.all()
+    return render(request, 'accounts/fabrics.html', {'fabrics': fabrics})
+
+def add_fabric(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        price_per_yard = request.POST['price_per_yard']
+        # Handle tags
+
+        fabric = Fabric.objects.create(name=name, price_per_yard=price_per_yard)
+        # Add fabric to tags
+
+        return redirect('fabrics')
+
+    return render(request, 'accounts/add_fabric.html')
+
+def update_fabric(request, fabric_id):
+    fabric = Fabric.objects.get(id=fabric_id)
+
+    if request.method == 'POST':
+        fabric.name = request.POST['name']
+        fabric.price_per_yard = request.POST['price_per_yard']
+        # Handle tags
+
+        fabric.save()
+        # Update fabric tags
+
+        return redirect('fabrics')
+
+    return render(request, 'accounts/update_fabric.html', {'fabric': fabric})
+
+def delete_fabric(request, fabric_id):
+    fabric = Fabric.objects.get(id=fabric_id)
+
+    if request.method == 'POST':
+        fabric.delete()
+        # Remove fabric from tags
+
+        return redirect('fabrics')
+
+    return render(request, 'accounts/delete_fabric.html', {'fabric': fabric})

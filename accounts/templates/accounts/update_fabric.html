@@ -1,0 +1,19 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+   <h2>Update Fabric</h2>
+   <form method="POST">
+       {% csrf_token %}
+       <div class="form-group">
+           <label for="name">Name:</label>
+           <input type="text" class="form-control" id="name" name="name" value="{{ fabric.name }}" required>
+       </div>
+       <div class="form-group">
+           <label for="price_per_yard">Price per Yard:</label>
+           <input type="number" step="0.01" class="form-control" id="price_per_yard" name="price_per_yard" value="{{ fabric.price_per_yard }}" required>
+       </div>
+       <!-- Add tags selection -->
+
+       <button type="submit" class="btn btn-primary">Update</button>
+   </form>
+{% endblock %}
