@@ -1,0 +1,7 @@
+<form method="POST">
+    {% csrf_token %}
+    {{ form_step3.as_p }}
+  
+    <button type="submit" name="form_step3_submit">Register</button>
+  </form>
+  

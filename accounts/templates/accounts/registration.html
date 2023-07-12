@@ -1,0 +1,15 @@
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    
+    <!-- User Registration Fields -->
+    {{ user_form.as_p }}
+    
+    <!-- Customer Registration Fields -->
+    {{ customer_form.as_p }}
+    
+    <!-- Address Fields -->
+    {{ address_form.as_p }}
+    
+    <button type="submit">Register</button>
+  </form>
+  

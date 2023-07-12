@@ -1,0 +1,7 @@
+<form method="POST">
+    {% csrf_token %}
+    {{ form_step1.as_p }}
+  
+    <button type="submit" name="form_step1_submit">Next</button>
+  </form>
+  
