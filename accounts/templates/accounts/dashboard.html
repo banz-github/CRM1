@@ -30,12 +30,21 @@
         </div>
     </div>
 -->
+
+<style>
+    .table table-sm{
+
+    }
+
+</style>
+    
+
+
     <div class="col-md-7">
-        <h5>LAST 5 ORDERS</h5>
         <hr>
         <div class="card card-body">
             
-            <table class="table table-sm">
+            <table class="table table-striped"> <!--table-sm-->
                 <tr>
                     <th>Customer Name</th>  <!-- New column for customer name -->
                     <th>Order ID</th>
@@ -56,7 +65,7 @@
                         <td>
                             <a class="btn btn-sm {% if order.is_hidden %}btn-success{% else %}btn-danger{% endif %}" 
                                href="{% url 'toggle_order_hidden' order.id %}">
-                               {% if order.is_hidden %}Show{% else %}Hide{% endif %}
+                               {% if order.is_hidden %}Show{% else %}Archive{% endif %}
                             </a>
                         </td>
                         <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
