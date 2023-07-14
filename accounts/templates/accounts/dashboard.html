@@ -4,10 +4,6 @@
 {% include 'accounts/status.html' %}
 <br>
 
-
-    
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -17,9 +13,12 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Customer Name</th> <!-- New column for customer name -->
+                                <th>Customer Name</th>
                                 <th>Order ID</th>
                                 <th>Products</th>
+                                <th>Address</th>
+                                <th>Email Address</th>
+                                <th>Phone</th>
                                 <th>Date Ordered</th>
                                 <th>Status</th>
                                 <th>Toggle Hidden</th>
@@ -30,9 +29,12 @@
                         <tbody>
                             {% for order in orders %}
                             <tr>
-                                <td>{{ order.customer.name }}</td> <!-- Display customer name -->
+                                <td>{{ order.customer.first_name }} {{ order.customer.last_name }} {{ order.customer.mi }}</td>
                                 <td>{{ order.order_id }}</td>
                                 <td>{{ order.product }}</td>
+                                <td>{{ order.customer.municipality }}, {{ order.customer.barangay }}, {{ order.customer.street }}</td>
+                                <td>{{ order.customer.email }}</td>
+                                <td>{{ order.customer.phone }}</td>
                                 <td>{{ order.date_created }}</td>
                                 <td>{{ order.status }}</td>
                                 <td>
