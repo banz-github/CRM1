@@ -1,8 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, default="Pansamantala")
+    username = models.CharField(max_length=150, unique=True, default="Pansamantala")
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    mi = models.CharField(max_length=1)
+    email = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20)
+    date_created = models.DateTimeField(auto_now_add=True)
+    region = models.CharField(max_length=200, default='Unknown')
+    province = models.CharField(max_length=200, default='Unknown')
+    municipality = models.CharField(max_length=200, default='Unknown')
+    barangay = models.CharField(max_length=200, default='Unknown')
+    street = models.CharField(max_length=200, default='Unknown')
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+# Create your models here.
+'''
+working to 
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -14,6 +33,13 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.name
+'''
+
+
+
+
+
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)

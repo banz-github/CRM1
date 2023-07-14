@@ -7,11 +7,21 @@ from .models import Product
 from django import forms
 from .models import Order
 
-class CustomerForm(ModelForm):
+class CustomerForm(forms.ModelForm):
+    # Fields from the Customer model
+    # ...
+
+    # Fields from the Address model
+    region = forms.CharField()
+    province = forms.CharField()
+    municipality = forms.CharField()
+    barangay = forms.CharField()
+    street = forms.CharField()
+
     class Meta:
         model = Customer
         fields = '__all__'
-        exclude = ['user']
+
 
 class OrderForm(ModelForm):
     class Meta:
@@ -19,9 +29,15 @@ class OrderForm(ModelForm):
         fields = '__all__'
 
 class CreateUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    mi = forms.CharField(required=True)
+    phone = forms.CharField(required=True)
+
     class Meta:
-        model = User 
-        fields = ['username','email', 'password1','password2']
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'mi', 'phone']
 
 class ProductForm(forms.ModelForm):
     class Meta:

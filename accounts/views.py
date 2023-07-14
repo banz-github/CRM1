@@ -19,6 +19,7 @@ from .forms import ProductForm
 from .forms import OrderFormU
 from django.shortcuts import render, get_object_or_404
 
+
 '''
 @unathenticated_user
 def registerPage(request):
@@ -43,15 +44,26 @@ from django.contrib.auth.decorators import login_required
 @unathenticated_user
 def registerPage(request):
     form = CreateUserForm()
+
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
+            customer_group = Group.objects.get(name='customer')
+            customer_group.user_set.add(user)  # Assign user to the "customer" group
 
-            messages.success(request, 'Account was created for ' + username)
-            return redirect('providephone')  # Redirect to providephone page
+            Customer.objects.create(
+                user=user,
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                mi=form.cleaned_data['mi'],
+                email=form.cleaned_data['email'],
+                phone=form.cleaned_data['phone']
+            )
+
+            messages.success(request, 'Account was created successfully')
+            return redirect('login')
 
     context = {'form': form}
     return render(request, 'accounts/register.html', context)
@@ -59,11 +71,8 @@ def registerPage(request):
 
 
 
-
 @unathenticated_user
 def loginPage(request):
-
-        
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -71,10 +80,10 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request,user)
+            login(request, user)
             return redirect('home')
         else:
-            messages.info(request, 'Username or Password is incorrect.')
+            messages.info(request, 'Username OR password is incorrect')
 
     context = {}
     return render(request, 'accounts/login.html', context)
