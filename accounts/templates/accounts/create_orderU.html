@@ -9,7 +9,12 @@
             <hr>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.product.label_tag }}
+                {{ form.product }}
+                {{ form.color.label_tag }}
+                {{ form.color }}
+                {{ form.fabric.label_tag }}
+                {{ form.fabric }}
                 <button class="btn btn-primary" type="submit">Place Order</button>
             </form>
         </div>

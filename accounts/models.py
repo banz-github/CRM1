@@ -87,27 +87,7 @@ class Order(models.Model):
         return f"No Product (Order #{self.id})"
 '''
 
-class Order(models.Model):
-    STATUS = (
-        ('Pending', 'Pending'),
-        ('Out for delivery', 'Out for delivery'),
-        ('Delivered', 'Delivered'),
-        ('Order Rejected', 'Order Rejected'),
-        ('Processing', 'Processing'),
-    )
-    is_hidden = models.BooleanField(default=False)
-    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    status = models.CharField(max_length=235, null=True, choices=STATUS)
-    note = models.CharField(max_length=1000, null=True)
 
-    def order_id(self):
-        return f"Order_ID#{self.id:03d}"  # Generate the order ID with prefix and zero-padding
-
-    def __str__(self):
-         return self.order_id()
     
 
 
@@ -138,3 +118,27 @@ class Fabric(models.Model):
 
     def __str__(self):
         return self.name if self.name is not None else ''
+    
+class Order(models.Model):
+    STATUS = (
+        ('Pending', 'Pending'),
+        ('Out for delivery', 'Out for delivery'),
+        ('Delivered', 'Delivered'),
+        ('Order Rejected', 'Order Rejected'),
+        ('Processing', 'Processing'),
+    )
+    is_hidden = models.BooleanField(default=False)
+    id = models.AutoField(primary_key=True)  # Add primary key field with auto-increment
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+    color = models.ForeignKey(Color, null=True, on_delete=models.SET_NULL)  # Add the color field
+    fabric = models.ForeignKey(Fabric, null=True, on_delete=models.SET_NULL)  # Add the fabric field
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    status = models.CharField(max_length=235, null=True, choices=STATUS)
+    note = models.CharField(max_length=1000, null=True)
+
+    def order_id(self):
+        return f"Order_ID#{self.id:03d}"  # Generate the order ID with prefix and zero-padding
+
+    def __str__(self):
+         return self.order_id()

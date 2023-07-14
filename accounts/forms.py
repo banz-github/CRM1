@@ -7,11 +7,6 @@ from .models import Product
 from django import forms
 from .models import Order
 
-class AccountSettingsForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = '__all__'
-        
 
 class CustomerForm(forms.ModelForm):
     # Fields from the Customer model
@@ -53,7 +48,7 @@ class ProductForm(forms.ModelForm):
 class OrderFormU(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['product']
+        fields = ['product', 'color', 'fabric']  # Include the 'color' and 'fabric' fields
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
