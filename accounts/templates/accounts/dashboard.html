@@ -15,7 +15,9 @@
                             <tr>
                                 <th>Customer Name</th>
                                 <th>Order ID</th>
-                                <th>Products</th>
+                                <th>Product</th>
+                                <th>Fabric</th>
+                                <th>Color</th>
                                 <th>Address</th>
                                 <th>Email Address</th>
                                 <th>Phone</th>
@@ -32,6 +34,8 @@
                                 <td>{{ order.customer.first_name }} {{ order.customer.last_name }} {{ order.customer.mi }}</td>
                                 <td>{{ order.order_id }}</td>
                                 <td>{{ order.product }}</td>
+                                <td>{{ order.fabric }}</td>
+                                <td>{{ order.color }}</td>
                                 <td>{{ order.customer.municipality }}, {{ order.customer.barangay }}, {{ order.customer.street }}</td>
                                 <td>{{ order.customer.email }}</td>
                                 <td>{{ order.customer.phone }}</td>
