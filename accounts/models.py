@@ -15,6 +15,7 @@ class Customer(models.Model):
     municipality = models.CharField(max_length=200, default='Unknown')
     barangay = models.CharField(max_length=200, default='Unknown')
     street = models.CharField(max_length=200, default='Unknown')
+    profile_pic = models.ImageField(default="dflt.jpg", null=True, blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

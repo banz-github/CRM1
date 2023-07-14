@@ -7,6 +7,12 @@ from .models import Product
 from django import forms
 from .models import Order
 
+class AccountSettingsForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+        
+
 class CustomerForm(forms.ModelForm):
     # Fields from the Customer model
     # ...
@@ -21,7 +27,7 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = '__all__'
-
+        exclude = ['user']
 
 class OrderForm(ModelForm):
     class Meta:

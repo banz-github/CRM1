@@ -158,7 +158,6 @@ def accountSettings(request):
 
     context = {'form':form}
     return render(request, 'accounts/account_settings.html', context)
-
 from django import forms
 
 class PhoneForm(forms.ModelForm):
