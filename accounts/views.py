@@ -342,7 +342,13 @@ def deleteOrder(request, pk):
 @admin_only 
 def hidden_orders(request):
     orders = Order.objects.filter(is_hidden=True)  # Filter hidden orders
-    return render(request, 'accounts/hidden_orders.html', {'orders': orders})
+    
+    total_orders = orders.count()
+    context = {
+        'orders': orders,
+        'total_orders': total_orders
+    }
+    return render(request, 'accounts/hidden_orders.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
