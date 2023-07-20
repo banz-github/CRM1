@@ -1,0 +1,106 @@
+<style>
+    /* Custom CSS classes for status colors */
+    #total-orders{
+        background-color: #808080; /* Grey (#808080) */
+    }
+  
+    #orders-pending {
+        background-color: #FBD200; /* Light Yellow (#ffffcc) */
+    }
+  
+    #processing {
+        background-color: #00D0FB ; /* Green (#008000) */
+    }
+  
+    #out-for-delivery {
+        background-color: #00D8B4 ; /* Light Green (#00ff80) */
+    }
+  
+    #orders-delivered {
+        background-color: #00FF7A   ; /* Blue Green (#00cc99) */
+    }
+  
+
+  </style>
+  
+  <br>
+  
+  <div class="row">
+    <!-- Total Orders -->
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3 status-card-grey" id="total-orders">
+                <div class="card-header">
+                    <h5 class="card-title">Total Orders</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{total_orders}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Orders Pending -->
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3 status-card-light-yellow" id="orders-pending">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Pending</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{pending}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Processing -->
+    <div class="col">
+      <div class="col-md">
+          <div class="card text-center text-white mb-3 status-card-blue-green" id="processing">
+              <div class="card-header">
+                  <h5 class="card-title">Processing</h5>
+              </div>
+              <div class="card-body">
+                  <h3 class="card-title">{{processing}}</h3>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Out for delivery -->
+  <div class="col">
+    <div class="col-md">
+        <div class="card text-center text-white mb-3 status-card-light-blue-green" id="out-for-delivery">
+            <div class="card-header">
+                <h5 class="card-title">Out for delivery</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{out_for_delivery}}</h3>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  
+  
+    <!-- Orders Delivered -->
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3 status-card-green" id="orders-delivered">
+                <div class="card-header">
+                    <h5 class="card-title">Orders Delivered</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{delivered}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- New Status Cards -->
+  
+
+  
+  </div>
+    

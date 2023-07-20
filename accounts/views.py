@@ -93,9 +93,9 @@ def logoutUser(request):
      return redirect('login')
 
 @login_required(login_url='login')
-@admin_only 
+@admin_only
 def home(request):
-    orders = Order.objects.filter(is_hidden=False)  # Filter out hidden orders
+    orders = Order.objects.filter(is_hidden=False)
     customer = Customer.objects.all()
 
     total_customers = customer.count()
@@ -103,12 +103,20 @@ def home(request):
     delivered = orders.filter(status='Delivered').count()
     pending = orders.filter(status='Pending').count()
 
+    # Add counts for the new statuses
+    rejected = orders.filter(status='Order Rejected').count()
+    processing = orders.filter(status='Processing').count()
+    out_for_delivery = orders.filter(status='Out for delivery').count()
+
     context = {
         'orders': orders,
         'customer': customer,
         'total_orders': total_orders,
         'delivered': delivered,
-        'pending': pending
+        'pending': pending,
+        'rejected': rejected,
+        'processing': processing,
+        'out_for_delivery': out_for_delivery,
     }
     return render(request, 'accounts/dashboard.html', context)
 
@@ -146,13 +154,20 @@ def myordersPage(request):
     delivered = orders.filter(status='Delivered').count()
     pending = orders.filter(status='Pending').count()
     
+    # Add counts for the new statuses
+    rejected = orders.filter(status='Order Rejected').count()
+    processing = orders.filter(status='Processing').count()
+    out_for_delivery = orders.filter(status='Out for delivery').count()
     print('ORDERS:',orders)
 
     context = {
         'orders': orders,
         'total_orders': total_orders,
         'delivered': delivered,
-        'pending': pending
+        'pending': pending,
+        'rejected': rejected,
+        'processing': processing,
+        'out_for_delivery': out_for_delivery,
     }
 
     return render(request, 'accounts/myorders.html', context)
