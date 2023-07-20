@@ -127,6 +127,19 @@ def view_customers(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
 def userPage(request):
+    customer = request.user.customer
+    latest_order = customer.order_set.latest('date_created')
+
+    context = {
+        'latest_order': latest_order,
+    }
+
+    return render(request, 'accounts/user.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def myordersPage(request):
 
     orders = request.user.customer.order_set.all()
     total_orders = orders.count()
@@ -142,7 +155,7 @@ def userPage(request):
         'pending': pending
     }
 
-    return render(request, 'accounts/user.html', context)
+    return render(request, 'accounts/myorders.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])

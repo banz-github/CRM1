@@ -126,7 +126,6 @@
             width: calc(100% + 20px);
             margin: -10px -10px 0;
         }
-
     </style>
 
 </head>
@@ -195,7 +194,7 @@
                         </div>
 
                         <div class="input_group mb-2">
-                            <div class="input-group-append">
+                            <div id="password2" class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 <input type="password" name="password2" placeholder="Confirm Password..."
                                     class="form-control">
@@ -225,6 +224,7 @@
         // Change font color of the form title
         var formTitle = document.querySelector('#form-title');
         formTitle.style.color = '#FF0000';
+        document.getElementById("password2").style.border = "2px red solid";
     </script>
 </body>
 

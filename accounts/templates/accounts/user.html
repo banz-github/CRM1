@@ -1,48 +1,36 @@
 {% extends 'accounts/main.html' %}
 {% block content %}
-{% include 'accounts/status.html' %}
 
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
+            <h5>My Recent Order</h5>
+            <hr>
             <table class="table table-striped">
                 <tr>
                     <th>Product</th>
                     <th>Fabric</th>
                     <th>Color</th>
-                    <!--<th>Note</th>-->
                     <th>Category</th>
                     <th>Date Order</th>
                     <th>Status</th>
                 </tr>
-
-                {% for order in orders %}
                 <tr>
-                    <td>{{ order.product }}</td>
-                    <td>{{ order.fabric }}</td>
-                    <td>{{ order.color }}</td>
-                    <!--<td>{{ order.note }}</td>-->
-                    <td>{{ order.product.category }}</td>
-                    <td>{{ order.date_created }}</td>
-                    <td>{{ order.status }}</td>
+                    <td>{{ latest_order.product }}</td>
+                    <td>{{ latest_order.fabric }}</td>
+                    <td>{{ latest_order.color }}</td>
+                    <td>{{ latest_order.product.category }}</td>
+                    <td>{{ latest_order.date_created }}</td>
+                    <td>{{ latest_order.status }}</td>
                 </tr>
-                {% endfor %}
             </table>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md">
-        <div class="card card-body">
-            <h5>Create Order</h5>
-            <hr>
-            <form method="POST" action="{% url 'create_orderU' %}">
-                {% csrf_token %}
-                <!-- form fields -->
-                <button class="btn btn-primary" type="submit">Place Order</button>
-            </form>
-        </div>
+    <div class="col-md"> 
+        <!-- Add any other content or forms you want to display here -->
     </div>
 </div>
 
