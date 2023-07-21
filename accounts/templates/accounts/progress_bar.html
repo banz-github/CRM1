@@ -1,0 +1,32 @@
+{% load static %}
+
+<style>
+  .card {
+    text-align: center;
+  }
+
+  .card img.progress-bar-container {
+    max-width: 70%;
+    max-height: auto;
+    margin: 0 auto; /* Center the image horizontally by setting left and right margins to auto */
+    display: block; /* To remove any default space for inline elements */
+  }
+</style>
+
+<div class="card card-body">
+  {% if latest_order.status == "Pending" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/1pending.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Processing" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/2processing.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Order Rejected" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/2rejected.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Out for delivery" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/3outfordelivery.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Ready for pickup" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/3readyforpickup.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Delivered" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/4delivered.png' %}" alt="Your Image">
+  {% elif latest_order.status == "Order Completed" %}
+    <img class="progress-bar-container" src="{% static 'images/progress/5completed.png' %}" alt="Your Image">
+  {% endif %}
+</div>
