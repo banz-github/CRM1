@@ -1,0 +1,132 @@
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-<INTEGRITY_CODE>" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+  /* Custom CSS for the sidebar */
+  .sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+    transition: left 0.3s;
+    margin-right: -15px; /* Add this negative margin */
+  }
+
+  .sidebar a {
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+  }
+
+  .sidebar a:hover {
+    background-color: #555;
+  }
+
+  .hello-msg {
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+
+  /* Hamburger icon for small screens */
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+  }
+
+  /* Add media query to show/hide hamburger icon and adjust sidebar */
+  @media (max-width: 768px) {
+    .sidebar {
+      left: -250px;
+      display: none;
+      margin-right: 0; /* Add this line to reset the margin for smaller screens */
+    }
+    .sidebar.collapsed {
+      left: 0;
+      display: block;
+    }
+
+    .hamburger {
+      display: block;
+    }
+  }
+
+  /* Add negative margin to the main content column to counteract the sidebar's margin */
+  .col-md-9 {
+    margin-left: 250px; /* Same width as the sidebar */
+  }
+
+</style>
+
+<div class="hamburger" onclick="toggleSidebar()">
+  <!-- Hamburger icon (you can use an icon library or an image here) -->
+  &#9776;
+</div>
+
+<div class="sidebar">
+    <!-- Sidebar content -->
+    <span class="hello-msg">Hello, {{request.user}} </span>
+    <a href="{% url 'home' %}">ATAIZA</a>
+    {% if request.user.is_staff %}
+      <!-- Staff links -->
+      <a href="{% url 'home' %}"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a>
+      <a href="{% url 'view_customers' %}"><i class="fas fa-users icon"></i>    View Customers</a>
+    <a href="{% url 'products' %}"><i class="fas fa-box icon"></i> Manage Products</a>
+    <a href="{% url 'fabrics' %}"><i class="fas fa-cubes icon"></i> Manage Fabrics</a>
+    <a href="{% url 'colors' %}"><i class="fas fa-palette icon"></i> Manage Colors</a>
+    <a href="{% url 'hidden_orders' %}"><i class="fas fa-archive icon"></i> Archived Orders</a>
+    {% else %}
+      <!-- Non-staff links -->
+      <a href="{% url 'myorders' %}"><i class="fas fa-shopping-cart icon"></i>My Orders</a>
+      <a href="{% url 'account' %}"><i class="fas fa-cog icon"></i>Settings</a>
+    {% endif %}
+    <span class="logout"><a class="logout-button" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt icon"></i>Logout</a></span>
+  </div>
+
+<!-- Add a wrapper for the main content to prevent overflow -->
+<div class="main-content-wrapper">
+  <div class="col-md-9">
+    {% block content %}
+    {% endblock %}
+  </div>
+</div>
+
+<script>
+  // JavaScript function to toggle the sidebar
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+  }
+</script>
+
+
+<!-- 
+<div class="content">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      onclick="toggleSidebar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <span class="hello-msg">Hello, {{request.user}} </span>
+    <span><a class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+  </nav>
+</div>
+-->

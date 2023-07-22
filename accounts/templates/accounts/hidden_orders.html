@@ -2,51 +2,58 @@
 
 {% block content %}
 {% include 'accounts/status_archived.html' %}
-<br>
 
-<div class="row">
-    <div class="col-md-12">
-        <hr>
-        <div class="card card-body">
-            
-            <table class="table table-sm">
-                <tr>
-                    <th>Customer Name</th>
-                    <th>Order ID</th>
-                    <th>Products</th>
-                    <th>Fabric</th>
-                    <th>Color</th>
-                    <th>Address</th>
-                    <th>Email Address</th>
-                    <th>Phone</th>
-                    <th>Date Ordered</th>
-                    <th>Status</th>
-                    <th>Unhide</th>
-                    <th>Remove</th>
-                </tr>
-                {% for order in orders %}
-                    <tr>
-                        <td>{{ order.customer.first_name }} {{ order.customer.last_name }} {{ order.customer.mi }}</td>
-                        <td>{{ order.order_id }}</td>
-                        <td>{{ order.product }}</td>
-                        <td>{{ order.fabric }}</td>
-                        <td>{{ order.color }}</td>
-                        <td>{{ order.customer.municipality }}, {{ order.customer.barangay }}, {{ order.customer.street }}</td>
-                        <td>{{ order.customer.email }}</td>
-                        <td>{{ order.customer.phone }}</td>
-                        <td>{{ order.date_created }}</td>
-                        <td>{{ order.status }}</td>
-                        <td>
-                            <form method="POST" action="{% url 'unhide_order' order.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-success">Unhide</button>
-                            </form>
-                        </td>
-                        <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-                        
-                    </tr>
-                {% endfor %}
-            </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <div class="card card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Order ID</th>
+                                <th>Products</th>
+                                <th>Fabric</th>
+                                <th>Color</th>
+                                <th>Address</th>
+                                <th>Email Address</th>
+                                <th>Phone</th>
+                                <th>Date Ordered</th>
+                                <th>Status</th>
+                                <th>Unhide</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.customer.first_name }} {{ order.customer.last_name }} {{ order.customer.mi }}</td>
+                                    <td>{{ order.order_id }}</td>
+                                    <td>{{ order.product }}</td>
+                                    <td>{{ order.fabric }}</td>
+                                    <td>{{ order.color }}</td>
+                                    <td>{{ order.customer.municipality }}, {{ order.customer.barangay }}, {{ order.customer.street }}</td>
+                                    <td>{{ order.customer.email }}</td>
+                                    <td>{{ order.customer.phone }}</td>
+                                    <td>{{ order.date_created }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td>
+                                        <form method="POST" action="{% url 'unhide_order' order.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-success">Unhide</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
