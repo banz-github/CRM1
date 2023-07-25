@@ -20,6 +20,8 @@ urlpatterns = [
     path('user/', views.userPage, name="user-page"),
     path('myorders/', views.myordersPage, name="myorders"),
 
+    path('dashboard_analytics/', views.dashboardAnalytics, name="dashboard_analytics"),
+
 
     path('order/<int:order_id>/', views.order_detail, name='order-detail'),
 

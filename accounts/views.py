@@ -169,6 +169,14 @@ def home(request):
     }
     return render(request, 'accounts/dashboard.html', context)
 
+@login_required(login_url='login')
+@admin_only
+def dashboardAnalytics(request):
+    context = {
+
+    }
+    return render(request, 'accounts/dashboard_analytics.html', context)
+
 
 
 @login_required(login_url='login')
