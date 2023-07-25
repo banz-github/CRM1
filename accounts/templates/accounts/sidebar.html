@@ -78,7 +78,8 @@
     <a href="{% url 'home' %}">ATAIZA</a>
     {% if request.user.is_staff %}
       <!-- Staff links -->
-      <a href="{% url 'home' %}"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a>
+      <a href="#"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a>
+      <a href="{% url 'home' %}"><i class="fas fa-shopping-cart icon"></i> View Orders</a>
       <a href="{% url 'view_customers' %}"><i class="fas fa-users icon"></i>    View Customers</a>
     <a href="{% url 'products' %}"><i class="fas fa-box icon"></i> Manage Products</a>
     <a href="{% url 'fabrics' %}"><i class="fas fa-cubes icon"></i> Manage Fabrics</a>
