@@ -169,15 +169,53 @@ def home(request):
     }
     return render(request, 'accounts/dashboard.html', context)
 
+from django.db.models import Count
+# ... (Previous code)
+# ... (Previous code)
+
+from django.db.models import Count
+
 @login_required(login_url='login')
 @admin_only
 def dashboardAnalytics(request):
-    context = {
+    # Most Ordered Product
+    most_ordered_product = Order.objects.values('product__name').annotate(count=Count('product__name')).order_by('-count')[:5]
+    most_ordered_product_labels = [item['product__name'] for item in most_ordered_product]
+    most_ordered_product_counts = [item['count'] for item in most_ordered_product]
 
+    # Most Ordered Color
+    most_ordered_color = Order.objects.values('color__name').annotate(count=Count('color__name')).order_by('-count')[:5]
+    most_ordered_color_labels = [item['color__name'] for item in most_ordered_color]
+    most_ordered_color_counts = [item['count'] for item in most_ordered_color]
+
+    # Most Ordered Fabric
+    most_ordered_fabric = Order.objects.values('fabric__name').annotate(count=Count('fabric__name')).order_by('-count')[:5]
+    most_ordered_fabric_labels = [item['fabric__name'] for item in most_ordered_fabric]
+    most_ordered_fabric_counts = [item['count'] for item in most_ordered_fabric]
+
+    # Top Customer
+    top_customers = Customer.objects.annotate(order_count=Count('order')).order_by('-order_count')[:5]
+    top_customer_labels = [f"{customer.first_name} {customer.last_name}" for customer in top_customers]
+    top_customer_order_counts = [customer.order_count for customer in top_customers]
+
+    # Address with Most Orders
+    most_ordered_addresses = Customer.objects.annotate(order_count=Count('order')).order_by('-order_count')[:5]
+    most_ordered_address_labels = [f"{customer.municipality}, {customer.barangay}, {customer.street}" for customer in most_ordered_addresses]
+    most_ordered_address_counts = [customer.order_count for customer in most_ordered_addresses]
+
+    context = {
+        'most_ordered_product_labels': most_ordered_product_labels,
+        'most_ordered_product_counts': most_ordered_product_counts,
+        'most_ordered_color_labels': most_ordered_color_labels,
+        'most_ordered_color_counts': most_ordered_color_counts,
+        'most_ordered_fabric_labels': most_ordered_fabric_labels,
+        'most_ordered_fabric_counts': most_ordered_fabric_counts,
+        'top_customer_labels': top_customer_labels,
+        'top_customer_order_counts': top_customer_order_counts,
+        'most_ordered_address_labels': most_ordered_address_labels,
+        'most_ordered_address_counts': most_ordered_address_counts,
     }
     return render(request, 'accounts/dashboard_analytics.html', context)
-
-
 
 @login_required(login_url='login')
 @admin_only 
