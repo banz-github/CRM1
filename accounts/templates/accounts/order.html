@@ -1,0 +1,23 @@
+{% extends 'accounts/main_user.html' %}
+
+{% block content %}
+{% include 'accounts/progress_bar_indiv.html' %}
+<br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Order Details</h5>
+            <hr>
+            <p>Order_ID#{{order.id}}</p>
+            <p>Product: {{ order.product }}</p>
+            <p>Fabric: {{ order.fabric }}</p>
+            <p>Color: {{ order.color }}</p>
+            <p>Category: {{ order.product.category }}</p>
+            <p>Date Ordered: {{ order.date_created }}</p>
+            <p>Status: {{ order.status }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

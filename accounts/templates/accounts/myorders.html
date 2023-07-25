@@ -14,6 +14,7 @@
                     <th>Category</th>
                     <th>Date Order</th>
                     <th>Status</th>
+                    <th></th>
                 </tr>
 
                 {% for order in orders %}
@@ -25,6 +26,7 @@
                     <td>{{ order.product.category }}</td>
                     <td>{{ order.date_created }}</td>
                     <td>{{ order.status }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'order-detail' order.id %}">View</a></td>
                 </tr>
                 {% endfor %}
             </table>

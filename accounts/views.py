@@ -144,6 +144,19 @@ def userPage(request):
 
     return render(request, 'accounts/user.html', context)
 
+# views.py
+from django.shortcuts import render, get_object_or_404
+from .models import Order
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    context = {
+        'order': order,
+    }
+    return render(request, 'accounts/order.html', context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
