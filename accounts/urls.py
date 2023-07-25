@@ -72,6 +72,10 @@ urlpatterns = [
     path('update_fabric/<int:fabric_id>/', views.update_fabric, name='update_fabric'),
     path('delete_fabric/<int:fabric_id>/', views.delete_fabric, name='delete_fabric'),
 
+
+    ############## LANDING RELATED
+    path('landing_page/', views.landingPage, name="landing_page"),
+
 ]
     
 

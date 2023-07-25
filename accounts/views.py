@@ -671,3 +671,16 @@ def delete_fabric(request, fabric_id):
         return redirect('fabrics')
 
     return render(request, 'accounts/delete_fabric.html', {'fabric': fabric})
+
+
+
+############ LANDING RELATED
+@unathenticated_user
+def landingPage(request):
+
+
+
+    context = {
+
+    }
+    return render(request, 'accounts/landing_page.html', context)
