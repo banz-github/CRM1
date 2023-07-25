@@ -2,6 +2,30 @@
 
 {% block content %}
 {% include 'accounts/status_admin.html' %}
+
+<style>
+    #searchbarcard {
+        background-color: #333;
+    }
+</style>
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body" id="searchbarcard">
+            <form method="GET" action="{% url 'home' %}">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search..." id="searchbar" name="q" value="{{ search_query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">

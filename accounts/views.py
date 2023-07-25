@@ -91,7 +91,7 @@ def loginPage(request):
 def logoutUser(request):
      logout(request)
      return redirect('login')
-
+''' working
 @login_required(login_url='login')
 @admin_only
 def home(request):
@@ -119,6 +119,57 @@ def home(request):
         'out_for_delivery': out_for_delivery,
     }
     return render(request, 'accounts/dashboard.html', context)
+'''
+from django.db.models import Q
+
+@login_required(login_url='login')
+@admin_only
+def home(request):
+    query = request.GET.get('q')
+    orders = Order.objects.filter(is_hidden=False)
+
+    if query:
+        # Filter by related Customer fields using '__' to navigate the ForeignKey relationship
+        orders = orders.filter(
+            Q(customer__first_name__icontains=query) |
+            Q(customer__last_name__icontains=query) |
+            Q(id__icontains=query) |  # Search by primary key (order ID)
+            Q(product__name__icontains=query) |  # Filter based on the 'name' field of the Product model
+            Q(fabric__name__icontains=query) |  # Filter based on the 'name' field of the Fabric model
+            Q(color__name__icontains=query) |  # Filter based on the 'name' field of the Color model
+            Q(customer__municipality__icontains=query) |
+            Q(customer__barangay__icontains=query) |
+            Q(customer__street__icontains=query) |
+            Q(customer__email__icontains=query) |
+            Q(customer__phone__icontains=query) |
+            Q(date_created__icontains=query) |
+            Q(status__icontains=query) |
+            Q(customer__id__icontains=query)  # Search by customer ID (ForeignKey field)
+        )
+
+    customer = Customer.objects.all()
+    total_customers = customer.count()
+    total_orders = orders.count()
+    delivered = orders.filter(status='Delivered').count()
+    pending = orders.filter(status='Pending').count()
+    rejected = orders.filter(status='Order Rejected').count()
+    processing = orders.filter(status='Processing').count()
+    out_for_delivery = orders.filter(status='Out for delivery').count()
+
+    context = {
+        'orders': orders,
+        'customer': customer,
+        'total_orders': total_orders,
+        'delivered': delivered,
+        'pending': pending,
+        'rejected': rejected,
+        'processing': processing,
+        'out_for_delivery': out_for_delivery,
+        'search_query': query,
+    }
+    return render(request, 'accounts/dashboard.html', context)
+
+
 
 @login_required(login_url='login')
 @admin_only 
