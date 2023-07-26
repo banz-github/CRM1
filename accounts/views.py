@@ -49,6 +49,8 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             customer_group = Group.objects.get(name='customer')
             customer_group.user_set.add(user)  # Assign user to the "customer" group
 
@@ -228,13 +230,16 @@ def view_customers(request):
     }
     return render(request, 'accounts/view_customers.html', context)
 
-
+from django.core.exceptions import ObjectDoesNotExist #Error catching
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
 def userPage(request):
     customer = request.user.customer
-    latest_order = customer.order_set.latest('date_created')
-
+    try:
+        latest_order = customer.order_set.latest('date_created')
+    except ObjectDoesNotExist:
+        # Handle the case when no order exists for the customer
+        latest_order = None
     context = {
         'latest_order': latest_order,
     }
@@ -281,7 +286,7 @@ def myordersPage(request):
     }
 
     return render(request, 'accounts/myorders.html', context)
-
+''' Working di lang nagana ung changes sa user
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
 def accountSettings(request):
@@ -296,6 +301,33 @@ def accountSettings(request):
 
     context = {'form':form}
     return render(request, 'accounts/account_settings.html', context)
+'''
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def accountSettings(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+
+    # Signal to update the associated user's email when the customer's email changes
+    @receiver(post_save, sender=Customer)
+    def update_user_email(sender, instance, created, **kwargs):
+        if not created:  # Only update user email if the Customer instance already exists (not created in this signal)
+            instance.user.email = instance.email
+            instance.user.save()
+
+    context = {'form': form}
+    return render(request, 'accounts/account_settings.html', context)
+
+
 from django import forms
 
 class PhoneForm(forms.ModelForm):

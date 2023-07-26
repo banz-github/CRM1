@@ -65,11 +65,11 @@
                                 <td>{{ order.status }}</td>
                                 <td>
                                     <a class="btn btn-sm {% if order.is_hidden %}btn-success{% else %}btn-danger{% endif %}" href="{% url 'toggle_order_hidden' order.id %}">
-                                        {% if order.is_hidden %}Show{% else %}Archive{% endif %}
+                                        {% if order.is_hidden %}Show{% else %}Delete{% endif %}
                                     </a>
                                 </td>
                                 <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-                                <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+                                <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Real Delete</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
