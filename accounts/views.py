@@ -148,7 +148,7 @@ def home(request):
             Q(status__icontains=query) |
             Q(customer__id__icontains=query)  # Search by customer ID (ForeignKey field)
         )
-
+    orders = orders.order_by('-date_created')
     customer = Customer.objects.all()
     total_customers = customer.count()
     total_orders = orders.count()
