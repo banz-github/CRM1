@@ -6,17 +6,29 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import add_product
-
+from django.urls import path, include
+from django.shortcuts import redirect
 
 
 
 urlpatterns = [
+        ############## LANDING RELATED
+    
+    path('landing_page/', views.home, name="home"),
+
+    
     path('register/', views.registerPage, name="register"),
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     
 
-    path('', views.home, name="home"),
+    path('', views.landingPage, name="landing_page"),
+
+
+
+
+
+
     path('user/', views.userPage, name="user-page"),
     path('myorders/', views.myordersPage, name="myorders"),
 
@@ -73,8 +85,7 @@ urlpatterns = [
     path('delete_fabric/<int:fabric_id>/', views.delete_fabric, name='delete_fabric'),
 
 
-    ############## LANDING RELATED
-    path('landing_page/', views.landingPage, name="landing_page"),
+
 
 ]
     
