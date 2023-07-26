@@ -10,11 +10,11 @@ class Customer(models.Model):
     email = models.CharField(max_length=200)
     phone = models.CharField(max_length=20)
     date_created = models.DateTimeField(auto_now_add=True)
-    region = models.CharField(max_length=200, default='Unknown')
-    province = models.CharField(max_length=200, default='Unknown')
-    municipality = models.CharField(max_length=200, default='Unknown')
-    barangay = models.CharField(max_length=200, default='Unknown')
-    street = models.CharField(max_length=200, default='Unknown')
+    region = models.CharField(max_length=200, default='Region Sample')
+    province = models.CharField(max_length=200, default='Sample Province')
+    municipality = models.CharField(max_length=200, default='Sample, City')
+    barangay = models.CharField(max_length=200, default='Barangay Sample')
+    street = models.CharField(max_length=200, default='123# Sample Street')
     profile_pic = models.ImageField(default="dflt.jpg", null=True, blank=True)
 
     def __str__(self):
