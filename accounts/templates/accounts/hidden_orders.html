@@ -21,7 +21,7 @@
                                 <th>Phone</th>
                                 <th>Date Ordered</th>
                                 <th>Status</th>
-                                <th>Unhide</th>
+                                <th>Recover</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
@@ -41,7 +41,7 @@
                                     <td>
                                         <form method="POST" action="{% url 'unhide_order' order.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-success">Unhide</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Undo Delete</button>
                                         </form>
                                     </td>
                                     <td>

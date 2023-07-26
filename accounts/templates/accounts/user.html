@@ -51,6 +51,17 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <form method="POST" action="{% url 'create_orderU' %}">
+                {% csrf_token %}
+                <!-- form fields -->
+                <button class="btn btn-primary" type="submit">Create New Order</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md"> 
