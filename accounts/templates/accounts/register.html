@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -131,6 +132,9 @@
 </head>
 
 <body>
+    <a href="{% url 'landing_page' %}">
+        <img src="{% static 'images/landing/logo.png' %}" alt="" style="position: absolute; top: 10px; left: 30px;" width="3%"  />
+        </a>
     <div class="container h-100">
         <div class="d-flex justify-content-center h-100">
             <div class="user_card">
