@@ -43,8 +43,8 @@
                                 <th>Address</th>
                                 <th>Email Address</th>
                                 <th>Phone</th>
-                                <th>Date Ordered</th>
                                 <th>Status</th>
+                                <th>Date Ordered</th>
                                 <th>Toggle Hidden</th>
                                 <th>Update</th>
                                 <th>Remove</th>
@@ -61,8 +61,8 @@
                                 <td>{{ order.customer.municipality }}, {{ order.customer.barangay }}, {{ order.customer.street }}</td>
                                 <td>{{ order.customer.email }}</td>
                                 <td>{{ order.customer.phone }}</td>
-                                <td>{{ order.date_created }}</td>
                                 <td>{{ order.status }}</td>
+                                <td>{{ order.date_created }}</td>
                                 <td>
                                     <a class="btn btn-sm {% if order.is_hidden %}btn-success{% else %}btn-danger{% endif %}" href="{% url 'toggle_order_hidden' order.id %}">
                                         {% if order.is_hidden %}Show{% else %}Delete{% endif %}
